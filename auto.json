@@ -1,0 +1,74 @@
+[
+    {
+        "Marca": "Fiat",
+        "Modello": "Punto",
+        "Anno": 2011,
+        "Provincia": "BR",
+        "Uniproprietario": "false",
+        "Kilometraggio": 120000
+
+    },
+    {
+        "Marca": "Fiat",
+        "Modello": "Punto",
+        "Anno": 2014,
+        "Provincia": "MI",
+        "Uniproprietario": "false",
+        "Kilometraggio": 99999
+
+    },
+    {
+        "Marca": "Renault",
+        "Modello": "Clio",
+        "Anno": 2000,
+        "Provincia": "MN",
+        "Uniproprietario": "true",
+        "Kilometraggio": 2000
+
+    },  
+    {
+        "Marca": "Fiat",
+        "Modello": "Punto",
+        "Anno": 2010,
+        "Provincia": "BG",
+        "Uniproprietario": "true",
+        "Kilometraggio": 22222
+
+    },
+    {
+        "Marca": "Fiat",
+        "Modello": "Panda",
+        "Anno": 2018,
+        "Provincia": "RO",
+        "Uniproprietario": "false",
+        "Kilometraggio": 7600
+
+    },
+    {
+        "Marca": "Fiat",
+        "Modello": "Croma",
+        "Anno": 2008,
+        "Provincia": "RM",
+        "Uniproprietario": "false",
+        "Kilometraggio": 780
+
+    },
+    {
+        "Marca": "peugeot",
+        "Modello": "308",
+        "Anno": 2010,
+        "Provincia": "NA",
+        "Uniproprietario": "true",
+        "Kilometraggio": 120000
+
+    },
+    {
+        "Marca": "Alfa Romeo",
+        "Modello": "mito",
+        "Anno": 2010,
+        "Provincia": "PA",
+        "Uniproprietario": "false",
+        "Kilometraggio": 34
+
+    }
+]
