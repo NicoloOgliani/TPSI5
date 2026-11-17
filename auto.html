@@ -2,143 +2,130 @@
 <html lang="it">
   <head>
     <meta charset="utf-8">
-    <title>Esercizio auto</title>
-    <link href="https://jsdelivr.net" rel="stylesheet">
+    <title>esercizio auto</title>
   </head>
-  <body class="container my-4">
+  <body>
     <h1>Auto usate</h1>
     
-        <div class="mb-3">
-            <button id="btnCaricaTutto" class="btn btn-primary me-2">Visualizza Intero Archivio</button>
-            <button id="btnCaricaUniproprietario" class="btn btn-success">Visualizza Uniproprietario</button>
-        </div>
+    <div>
+        <button id="btnCaricaTutto">Visualizza Intero Archivio</button>
+        <button id="btnCaricaUniproprietario">visualizza Uniproprietario</button>
+    </div>
 
-        <div class="mb-3">
-            Provincia: 
-            <input type="text" id="provinciaRichiesta" class="form-control" placeholder="Es Milano">
-            <button id="btnCercaProvincia" class="btn btn-secondary">Cerca Provincia</button>
-        </div>
+    <div>
+        Provincia: 
+        <input type="text" id="provinciaRichiesta" placeholder="Es Milano">
+        <button id="btnCercaProvincia">cerca Provincia</button>
+    </div>
 
-        <div class="mb-3">
-            Marca: 
-            <input type="text" id="marcaRichiesta" class="form-control" placeholder="marca">
-            <button id="btnCercaMarca" class="btn btn-secondary">Cerca marca</button>
-        </div>
+    <div>
+        Marca: 
+        <input type="text" id="marcaRichiesta" placeholder="marca">
+        <button id="btnCercaMarca">Cerca marca</button>
+    </div>
 
-        <div class="mb-4">
-            Immatricolazione da Anno: <input type="text" id="annoX" class="form-control" placeholder="2000"> 
-            a Anno: <input type="text" id="annoY" class="form-control" placeholder="2010">
-            <button id="btnCercaAnni" class="btn btn-secondary ms-2">Filtra per Anno</button>
-        </div>
+    <div>
+        Immatricolazione da Anno: <input type="text" id="annoX" placeholder="2000"> 
+        a Anno: <input type="text" id="annoY" placeholder="2010">
+        <button id="btnCercaAnni">Filtra per Anno</button>
+    </div>
 
-        <div id="viewBox" class="p-3 bg-white" style="border: solid 1px rgb(200,0,0); min-height: 100px;">
-            scegli un opzione
-        </div>
+    <div id="archivioAuto">
+    </div>
 
-    <!--qui mettiamo la tabella-->
-    <table class="table table-bordered table-striped">
-      <thead class="table-dark">
-        <tr>
-          <th>Marca</th>
-          <th>Modello</th>
-          <th>Anno</th>
-          <th>Provincia</th>
-          <th>Proprietario</th>
-          <th>KM</th>
-        </tr>
-      </thead>
-      <tbody id="tabellaAuto">
-        <!--qui mettiamo le righe della tabella-->
-      </tbody>
-    </table>
     <script>
-      //qui scriviamo il codice javascript
-      let vb=document.querySelector("#viewBox");
-      let tBody=document.querySelector("#tabellaAuto");
+      let contenitoreAuto=document.querySelector("#archivioAuto");
+
+      function resetRisultati() {
+        contenitoreAuto.innerHTML = "";
+      }
+
+      // Genera una riga di testo semplice per ogni auto trovata
+      function generaRigaAuto(autoSingola) {
+        let proprietarioText = autoSingola.Uniproprietario ? "Sì" : "No";
+        return "<div>Marca: " + autoSingola.Marca + "Modello: " + autoSingola.Modello + "Anno: " + autoSingola.Anno + "Provincia: " + autoSingola.Provincia + "Uniproprietario: " + proprietarioText + "KM: " + autoSingola.Kilometraggio + "</div>";
+      }
 
       //visualizza archivio
       async function leggiArchivio(){
         const promise=await fetch("auto.json");
         const auto=await promise.json();
 
-        vb.innerHTML="Numero auto: "+ auto.length;
-        tBody.innerHTML="";//svuota la tabella
+        resetRisultati();
 
         for(let i=0; i<auto.length; i++){
-          tBody.innerHTML+="<tr><td>"+auto[i].Marca+"</td><td>"+auto[i].Modello+"</td><td>"+auto[i].Anno+"</td><td>"+auto[i].Provincia+"</td><td>"+auto[i].Uniproprietario+"</td><td>"+auto[i].Kilometraggio+"</td></tr>";
+          contenitoreAuto.innerHTML += generaRigaAuto(auto[i]);
         }
       }
+
       //visualizza uniproprietario
       async function cercaProprietario(){
         const promise=await fetch("auto.json");
         const auto=await promise.json();
 
-        vb.innerHTML="Selezionate auto uniproprietario: ";
-        tBody.innerHTML="";//svuota la tabella
+        resetRisultati();
 
         for(let i=0; i<auto.length; i++){
-          //controlla se nel json l uniproprietario è true
           if(auto[i].Uniproprietario===true){
-            tBody.innerHTML+="<tr><td>"+auto[i].Marca+"</td><td>"+auto[i].Modello+"</td><td>"+auto[i].Anno+"</td><td>"+auto[i].Provincia+"</td><td>"+auto[i].Uniproprietario+"</td><td>"+auto[i].Kilometraggio+"</td></tr>";
+            contenitoreAuto.innerHTML += generaRigaAuto(auto[i]);
           }
         }
       }
+
       //funzione per cercare le auto di una specifica provincia
       async function cercaProvincia(){
         let provInput=document.querySelector("#provinciaRichiesta").value;
         const promise=await fetch("auto.json");
         const auto=await promise.json();
 
-        vb.innerHTML="Risultati per provincia:"+provInput;
-        tBody.innerHTML="";//svuota la tabella
+        resetRisultati();
         for(let i=0; i<auto.length; i++){
-          //controlla la provincia dell auto
           if(auto[i].Provincia===provInput){
-            tBody.innerHTML+="<tr><td>"+auto[i].Marca+"</td><td>"+auto[i].Modello+"</td><td>"+auto[i].Anno+"</td><td>"+auto[i].Provincia+"</td><td>"+auto[i].Uniproprietario+"</td><td>"+auto[i].Kilometraggio+"</td></tr>";
+            contenitoreAuto.innerHTML += generaRigaAuto(auto[i]);
           }
         }
       }
+
       //funzione x cercare auto x marca
       async function cercaMarca(){
         let marcaInput=document.querySelector("#marcaRichiesta").value;
         const promise=await fetch("auto.json");
         const auto=await promise.json();
-        vb.innerHTML="risultati ricerca marca: "+marcaInput;
-        tBody.innerHTML="";//svuota la tabella
+        
+        resetRisultati();
+        
         for(let i=0; i<auto.length; i++){
-          //controlla la marca dell auto
           if(auto[i].Marca==marcaInput){
-            tBody.innerHTML+="<tr><td>"+auto[i].Marca+"</td><td>"+auto[i].Modello+"</td><td>"+auto[i].Anno+"</td><td>"+auto[i].Provincia+"</td><td>"+auto[i].Uniproprietario+"</td><td>"+auto[i].Kilometraggio+"</td></tr>";
+            contenitoreAuto.innerHTML += generaRigaAuto(auto[i]);
           }
         }
       }
-      //funzione x filtrare le auto x anno
+
+      //funzione x filtrarw le auto x anno
       async function cercaAnni(){
-        //prende i valori degli input e li converte in numeri interi
-        let annoInizio=parseInt(document.querySelector("#annox").value);
-        let annoFine=parseInt(document.querySelector("#annoy").value);
+        let annoInizio=parseInt(document.querySelector("#annoX").value);
+        let annoFine=parseInt(document.querySelector("#annoY").value);
         const promise=await fetch("auto.json");
         const auto=await promise.json();
-        vb.innerHTML="Risultati cerca anno: "+annoInizio+"-"+annoFine;
-        tBody.innerHTML="";//svuota la tabella
+        
+        resetRisultati();
+        
         for(let i=0; i<auto.length; i++){
-          //controlla se l anno è compreso tra annoInizio e annoFine
           if(auto[i].Anno>annoInizio && auto[i].Anno<=annoFine){
-            tBody.innerHTML+=annoFine+"<tr><td>"+auto[i].Marca+"</td><td>"+auto[i].Modello+"</td><td>"+auto[i].Anno+"</td><td>"+auto[i].Provincia+"</td><td>"+auto[i].Uniproprietario+"</td><td>"+auto[i].Kilometraggio+"</td></tr>";
+            contenitoreAuto.innerHTML += generaRigaAuto(auto[i]);
           }
         }
       }
+
       //associazione delle funzioni ai click dei bottoni
       let btnCaricaTutto=document.querySelector("#btnCaricaTutto");
       btnCaricaTutto.addEventListener("click", leggiArchivio);
 
       let btnCercaProvincia=document.querySelector("#btnCercaProvincia");
       btnCercaProvincia.addEventListener("click", cercaProvincia);
-
       
       let btnCaricaUniproprietario=document.querySelector("#btnCaricaUniproprietario");
       btnCaricaUniproprietario.addEventListener("click", cercaProprietario);
-
       
       let btnCercaMarca=document.querySelector("#btnCercaMarca");
       btnCercaMarca.addEventListener("click", cercaMarca);
