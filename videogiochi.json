@@ -1,0 +1,22 @@
+[
+    {
+        "nome":"Fortnite",
+        "casaeditrice": "epic games",
+        "tipologia": "combattimento"
+    },
+    {
+        "nome":"GTA 6",
+        "casaeditrice": "rockstar",
+        "tipologia": "open world"
+    },
+    {
+        "nome":"clash royale",
+        "casaeditrice": "supercell",
+        "tipologia": "strategia"
+    },
+    {
+        "nome":"Minecraft",
+        "casaeditrice": "mojang",
+        "tipologia": "SandBox"
+    }
+]

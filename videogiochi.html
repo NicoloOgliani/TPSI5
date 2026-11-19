@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Videogiochi</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">+
+
+    </head>
+    <body>
+        <h1>Videogiochi</h1>
+        <div class="container mt-3">
+            <button class="btn btn-primary" id="btnCaricaArchivio">Carica archivio videogiochi</button>
+            <input class="form-control mb-3" id="inputNome" type="text" placeholder="es. Fortnite">
+            <button class="btn btn-primary" id="btnCercaPerNome">Cerca per nome</button>
+            <input class="form-control mb-3" id="inputTipologia" type="text" placeholder="es. combattimento">
+            <button class="btn btn-primary" id="btnCercaPerTipologia">Cerca per tipologia</button>
+        </div>
+        <script>
+            document.querySelector("#btnCaricaArchivio").addEventListener('click', async function(){
+                alert("Carica archivio di JSON");
+            });
+            document.querySelector("#btnCaricaArchivio").addEventListener('click', async function(){
+                const promise=await fetch("videogiochi.json");
+                const jsonArr= await promise.json();
+                let vb=document.querySelector("#viewbox");
+                let cnt;
+
+                let resultTable='<table class="table table-striped table-hover">';
+                resultTable +='<thead><tr>';
+                resultTable +='<th scope="col">#</th>';
+                resultTable +='<th scope="col">Nome</th>';
+                resultTable +='<th scope="col">Casa editrice</th>';
+                resultTable +='<th scope="col">Tipologia</th>';
+                resultTable +='</thead></tr>';
+                resultTable +='<tbody>';
+                    for(let i=0; i<jsonArr.lenght; i++){
+                        resultTable += '<tr>';
+                        resultTable += '<th scope="row">'+(i+1)+'</th>';
+                        resultTable += '<td>'+jsonArr[i].nome+'</td>';
+                        resultTable += '<td>'+jsonArr[i].casaeditrice+'</td>';
+                        resultTable += '<td>'+jsonArr[i].tipologia+'</td>';
+                        resultTable += '</tr>';
+                    }
+                resultTable += '</tbody>';
+                resultTable += '<caption>Videogiochi</caption>';
+                resultTable += '</table>';
+                vb.innerHTML=resultTable;
+            });
+            document.querySelector("#btnCercaPerNome").addEventListener('cli9ck')
+        </script>
+    </body>
+</html>
